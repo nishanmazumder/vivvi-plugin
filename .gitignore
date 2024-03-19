@@ -1,0 +1,8 @@
+node_modules/
+src/
+package.json
+readme.md
+process.md
+LICENSE.txt
+build
+package-lock.json

@@ -67,7 +67,7 @@ class ViVVi_Plugin {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-        $this->version = ViVVI_VERSION;
+		$this->version     = ViVVI_VERSION;
 		$this->plugin_name = 'vivvi-plugin';
 
 		$this->load_dependencies();
@@ -75,7 +75,6 @@ class ViVVi_Plugin {
 		$this->define_include_hooks();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -113,10 +112,10 @@ class ViVVi_Plugin {
 		 */
 		require_once ViVVi_PATH . 'includes/class-vivvi-i18n.php';
 
-        /**
-         * The class responsible for defining all actions that occur in both admin and public-facing areas.
-         */
-        require_once ViVVi_PATH . 'includes/class-vivvi-include.php';
+		/**
+		 * The class responsible for defining all actions that occur in both admin and public-facing areas.
+		 */
+		require_once ViVVi_PATH . 'includes/class-vivvi-include.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
@@ -130,7 +129,6 @@ class ViVVi_Plugin {
 		require_once ViVVi_PATH . 'public/class-vivvi-public.php';
 
 		$this->loader = new ViVVi_Loader();
-
 	}
 
 	/**
@@ -147,23 +145,21 @@ class ViVVi_Plugin {
 		$plugin_i18n = new ViVVi_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
-    /**
-     * Register all of the hooks related to both admin and public-facing areas functionality
-     * of the plugin.
-     *
-     * @since    1.0.0
-     * @access   private
-     */
-    private function define_include_hooks() {
+	/**
+	 * Register all of the hooks related to both admin and public-facing areas functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_include_hooks() {
 
-        $plugin_admin = new ViVVi_Include( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new ViVVi_Include( $this->get_plugin_name(), $this->get_version() );
 
-        $this->loader->add_action( 'init', $plugin_admin, 'init_something' );
-
-    }
+		$this->loader->add_action( 'init', $plugin_admin, 'init_something' );
+	}
 
 	/**
 	 * Register all of the hooks related to the admin area functionality
@@ -177,12 +173,12 @@ class ViVVi_Plugin {
 		$plugin_admin = new ViVVi_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_admin_menu' );
-        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_resources' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_resources' );
 
-        /*Register Settings*/
-        $this->loader->add_action( 'rest_api_init', $plugin_admin, 'register_settings' );
-        $this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
-
+		// REMOVE
+		/*Register Settings*/
+		$this->loader->add_action( 'rest_api_init', $plugin_admin, 'register_settings' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
 	}
 
 	/**
@@ -196,9 +192,8 @@ class ViVVi_Plugin {
 
 		$plugin_public = new ViVVi_Public( $this->get_plugin_name(), $this->get_version() );
 
-        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_public_resources' );
-
-    }
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_public_resources' );
+	}
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
@@ -239,5 +234,4 @@ class ViVVi_Plugin {
 	public function get_version() {
 		return $this->version;
 	}
-
 }

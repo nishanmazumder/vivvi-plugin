@@ -3,7 +3,6 @@
 /**
  * The ViVVi plugin init
  *
- *
  * @link              https://www.bdsoftcr.com/
  * @since             1.0.0
  * @package           ViVVi
@@ -48,7 +47,7 @@ function deactivate_vivvi_plugin() {
 	ViVVi_Plugin_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_vivvi_plugin');
+register_activation_hook( __FILE__, 'activate_vivvi_plugin' );
 register_deactivation_hook( __FILE__, 'deactivate_vivvi_plugin' );
 
 /**
@@ -70,6 +69,5 @@ function run_vivvi_plugin() {
 
 	$plugin = new ViVVi_Plugin();
 	$plugin->run();
-
 }
 run_vivvi_plugin();

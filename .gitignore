@@ -2,6 +2,7 @@ node_modules/
 src/
 package.json
 readme.md
+README.txt
 process.md
 LICENSE.txt
 build

@@ -179,6 +179,13 @@ class ViVVi_Plugin {
 		/*Register Settings*/
 		$this->loader->add_action( 'rest_api_init', $plugin_admin, 'register_settings' );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'register_settings' );
+
+		$this->loader->add_action( 'wp_ajax_vivvi_settings_update', $plugin_admin, 'handle_settings_update' );
+		
+
+		
+
+
 	}
 
 	/**

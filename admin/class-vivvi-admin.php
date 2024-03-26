@@ -42,6 +42,14 @@ class ViVVi_Admin {
 	private $version;
 
 	/**
+	 * @var array
+	 */
+	public $response = array(
+		'success' => true,
+		'message' => '',
+	);
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -76,7 +84,7 @@ class ViVVi_Admin {
 	 * @since    1.0.0
 	 */
 	public function add_setting_root_div() {
-		echo '<div id="' . $this->plugin_name . '"></div>';
+		echo '<div id="' . esc_html( $this->plugin_name ) . '"></div>';
 	}
 
 	/**
@@ -106,19 +114,6 @@ class ViVVi_Admin {
 			return;
 		}
 
-		wp_enqueue_style( 'at-grid', ViVVi_URL . 'assets/library/at-grid/at-grid.min.css', array(), $this->version );
-
-		$at_grid_css_var = '
-            :root{
-                --at-container-sm: 540px;
-                --at-container-md: 720px;
-                --at-container-lg: 960px;
-                --at-container-xl: 1140px;
-                --at-gutter:15px;
-            }
-        ';
-		wp_add_inline_style( 'at-grid', $at_grid_css_var );
-
 		/*Scripts dependency files*/
 		$deps_file = ViVVi_PATH . 'build/admin/settings.asset.php';
 
@@ -136,6 +131,9 @@ class ViVVi_Admin {
 		wp_enqueue_script( $this->plugin_name, ViVVi_URL . 'build/admin/settings.js', $dependency, $version, true );
 
 		wp_enqueue_style( $this->plugin_name, ViVVi_URL . 'build/admin/style-settings.css', array( 'wp-components' ), $version );
+		
+		// tailwind // npx tailwindcss build src/index.css -o admin-style.css --watch
+		wp_enqueue_style( $this->plugin_name . '_tailwind', ViVVi_URL . 'build/admin-style.css', array( 'wp-components' ), $version );
 
 		$localize = array(
 			'version' => $this->version,
@@ -143,8 +141,93 @@ class ViVVi_Admin {
 		);
 		wp_set_script_translations( $this->plugin_name, $this->plugin_name );
 		wp_localize_script( $this->plugin_name, 'vivviBuild', $localize );
+
+		wp_localize_script( $this->plugin_name, 'vivviSettings', $this->get_localize_vars( true ) );
 	}
 
+	public function get_localize_vars( $is_array = '' ) {
+
+		$vars = apply_filters(
+			'vivvi_local_vars',
+			array(
+				'ajaxUrl'  => esc_url_raw( admin_url( 'admin-ajax.php' ) ),
+				'nonce'    => wp_create_nonce( 'vivviSettings' ),
+				'actions'  => array(
+					'settings' => 'vivvi_settings_update',
+				),
+				'settings' => self::get_settings(),
+				'version'  => $this->version,
+			)
+		);
+
+		if ( $is_array ) {
+			return $vars;
+		}
+
+		wp_send_json( $vars );
+	}
+
+	public static function get_setting_keys() {
+		return apply_filters(
+			'vivvi_setting_keys',
+			array(
+				'vivvi_brand_data',
+			)
+		);
+	}
+
+	protected static function get_settings() {
+		$settings = array();
+		foreach ( self::get_setting_keys() as $setting_key ) {
+			$settings[ $setting_key ] = get_option( $setting_key );
+		}
+
+		return $settings;
+	}
+
+	public function send_ajax_response() {
+		if ( $this->response['success'] ) {
+			wp_send_json_success( $this->response );
+		}
+		wp_send_json_error( $this->response );
+	}
+
+	public function handle_settings_update() {
+		$keys      = self::get_setting_keys();
+		$post_data = self::get_paylod_data( 'settings' );
+
+		foreach ( $post_data as $data ) {
+			if ( ! in_array( $data->id, $keys ) ) {
+				continue;
+			}
+			update_option( $data->id, $data->value );
+		}
+
+		$this->response['message'] = __( 'Settings value updated', 'vivvi_text_domain' );
+		
+		// update_option( $keys[0], $post_data );
+		// $this->response['message'] = json_encode($keys);
+		// $this->response['message'] = $post_data;
+
+
+		$this->send_ajax_response();
+	}
+
+	public static function get_paylod_data( $decode_key = '' ) {
+		if ( ! check_ajax_referer( 'vivviSettings' ) ) {
+			return false;
+		}
+		$post_data = array_map( 'wp_unslash', $_POST );
+
+		if ( empty( $decode_key ) ) {
+			return $post_data;
+		}
+
+		return json_decode( $post_data[ $decode_key ] );
+	}
+
+
+	// REMOVE
 
 	/**
 	 * Register settings.
@@ -158,7 +241,8 @@ class ViVVi_Admin {
 	 * @return void
 	 */
 	public function register_settings() {
-		$defaults = ViVVi_default_options();
+
+		$defaults = vivvi_default_options();
 		register_setting(
 			'vivvi_settings_group',
 			'vivvi_options',

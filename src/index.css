@@ -1,0 +1,4 @@
+/* npx tailwindcss build src/index.css -o admin-style.css --watch */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

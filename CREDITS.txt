@@ -1,0 +1,15 @@
+Development Credits And Associated Licenses
+===========================================
+
+Third Party Code Credits
+========================
+
+WP React Plugin Boilerplate - https://github.com/codersantosh/wp-react-plugin-boilerplate
+
+
+Tailwind
+---------------
+- File Location: /src/index.css
+- Source: https://github.com/tailwindlabs/tailwindcss
+- License: MIT
+- License URI: https://github.com/tailwindlabs/tailwindcss/blob/next/LICENSE

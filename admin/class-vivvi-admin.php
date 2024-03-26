@@ -131,7 +131,7 @@ class ViVVi_Admin {
 		wp_enqueue_script( $this->plugin_name, ViVVi_URL . 'build/admin/settings.js', $dependency, $version, true );
 
 		wp_enqueue_style( $this->plugin_name, ViVVi_URL . 'build/admin/style-settings.css', array( 'wp-components' ), $version );
-		
+
 		// tailwind // npx tailwindcss build src/index.css -o admin-style.css --watch
 		wp_enqueue_style( $this->plugin_name . '_tailwind', ViVVi_URL . 'build/admin-style.css', array( 'wp-components' ), $version );
 
@@ -140,7 +140,8 @@ class ViVVi_Admin {
 			'root_id' => $this->plugin_name,
 		);
 		wp_set_script_translations( $this->plugin_name, $this->plugin_name );
-		wp_localize_script( $this->plugin_name, 'vivviBuild', $localize );
+
+        wp_localize_script( $this->plugin_name, 'vivviBuild', $localize );
 
 		wp_localize_script( $this->plugin_name, 'vivviSettings', $this->get_localize_vars( true ) );
 	}
@@ -204,7 +205,7 @@ class ViVVi_Admin {
 		}
 
 		$this->response['message'] = __( 'Settings value updated', 'vivvi_text_domain' );
-		
+
 		// update_option( $keys[0], $post_data );
 		// $this->response['message'] = json_encode($keys);
 		// $this->response['message'] = $post_data;

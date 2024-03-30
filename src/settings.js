@@ -3,4 +3,6 @@
 * */
 // import './admin/settings/routes';
 
-import './index';
+// import './index';
+
+import './crud/index'

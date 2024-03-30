@@ -1,15 +1,25 @@
-import React from 'react'
-import UserList from './UserList'
-import UserForm from './UserForm'
+import { useContext } from "@wordpress/element";
+import { Spinner } from "@wordpress/components";
 
-export default function App() {
+import CrudContextProvider, { CrudContext } from "../context/CrudContext";
+
+import Brand from "../admin/brand";
+
+const App = () => {
+
+    const { useSettings } = useContext(CrudContext);
+
+    if (!Object.keys(useSettings).length) {
+        return (
+            <Spinner className="vivvi_page_spinner" />
+        )
+    }
+
     return (
-        <>
-
-            <UserForm />
-
-            <UserList />
-
-        </>
+        <CrudContextProvider>
+            <Brand />
+        </CrudContextProvider>
     )
 }
+
+export default App;

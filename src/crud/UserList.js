@@ -1,5 +1,4 @@
 // UserList.js
-import React from 'react';
 import { useUserContext } from './UserContext';
 
 const UserList = () => {

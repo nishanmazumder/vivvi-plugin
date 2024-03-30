@@ -1,5 +1,5 @@
 // UserContext.js
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer } from '@wordpress/element';
 
 // Initial state for users
 const initialState = {

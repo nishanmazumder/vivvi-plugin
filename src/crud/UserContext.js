@@ -6,28 +6,22 @@ const initialState = {
     users: [],
 };
 
-// Action types
-const GET_USERS_SUCCESS = 'GET_USERS_SUCCESS';
-const ADD_USER_SUCCESS = 'ADD_USER_SUCCESS';
-const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
-const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
-
 // Reducer function
 const userReducer = (state, action) => {
     switch (action.type) {
-        case GET_USERS_SUCCESS:
+        case 'GET_USERS_SUCCESS':
             return { ...state, users: action.payload };
 
-        case ADD_USER_SUCCESS:
+        case 'ADD_USER_SUCCESS':
             return { ...state, users: [...state.users, action.payload] };
 
-        case EDIT_USER_SUCCESS:
+        case 'EDIT_USER_SUCCESS':
             const updatedUsers = state.users.map(user =>
                 user.id === action.payload.id ? action.payload : user
             );
             return { ...state, users: updatedUsers };
 
-        case DELETE_USER_SUCCESS:
+        case 'DELETE_USER_SUCCESS':
             const filteredUsers = state.users.filter(user => user.id !== action.payload.id);
             return { ...state, users: filteredUsers };
 

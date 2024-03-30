@@ -8,7 +8,7 @@ const UserForm = () => {
 
     const addUser = () => {
         // Dispatch ADD_USER_SUCCESS action
-        dispatch({ type: ADD_USER_SUCCESS, payload: { id: Date.now(), name } });
+        dispatch({ type: 'ADD_USER_SUCCESS', payload: { id: Date.now(), name } });
         setName('');
     };
 

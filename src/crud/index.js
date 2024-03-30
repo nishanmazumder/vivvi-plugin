@@ -2,7 +2,8 @@
 import React from 'react';
 import domReady from '@wordpress/dom-ready'
 import { createRoot } from '@wordpress/element'
-import UserForm from './UserForm';
+import App from './App';
+// import UserForm from './UserForm';
 import { UserProvider } from './UserContext';
 
 const app = document.getElementById(vivviBuild.root_id);
@@ -14,7 +15,7 @@ domReady(() => {
     if ('undefined' !== typeof app && null !== app) {
         root.render(
             <UserProvider>
-                <UserForm />
+                <App />
             </UserProvider>
         );
     }

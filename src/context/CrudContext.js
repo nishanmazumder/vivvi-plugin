@@ -1,16 +1,10 @@
 // UserContext.js
-import { createContext, useContext, useReducer } from '@wordpress/element';
+import { createContext, useEffect, useReducer } from '@wordpress/element';
 import { isEqual } from "lodash";
-import CrudReducer from '../reducer/crud-reducer';
 import { fetchSettings, updateSettings } from '../api/settings';
-
+import CrudReducer from '../reducer/crud-reducer';
 
 export const CrudContext = createContext();
-
-// Initial state for users
-const initialState = {
-    users: [],
-};
 
 const CrudContextProvider = (props) => {
 
@@ -21,15 +15,15 @@ const CrudContextProvider = (props) => {
         notice: '',
         hasError: '',
         canSave: false,
-    };
+    }
+
 
     const [state, dispatch] = useReducer(CrudReducer, initialState);
 
-
-    const useDispatch = (args) => {
-        /*Reducer state on args*/
-        dispatch(args);
-    };
+    // const useDispatch = (args) => {
+    //     /*Reducer state on args*/
+    //     dispatch(args);
+    // };
 
     const useFetchSettings = async () => {
         const gotSettings = await fetchSettings();
@@ -41,30 +35,39 @@ const CrudContextProvider = (props) => {
                 stateSettings: gotSettings,
             },
         });
+
     };
 
 
-    const useAddSettings = () => {
-        // Dispatch ADD_USER_SUCCESS action
-        dispatch({ type: 'ADD_USER_SUCCESS', payload: { id: Date.now(), name } });
-        setName('');
-    };
+    // console.log(state);
+
+    // const useAddSettings = () => {
+    //     // Dispatch ADD_USER_SUCCESS action
+    //     dispatch({
+    //         type: 'ADD_USER_SUCCESS',
+    //         payload: { id: Date.now(), name }
+    //     });
+    //     setName('');
+    // };
 
     useEffect(() => {
         useFetchSettings();
     }, []);
 
+
+
     let ContextValues = {
-        useFetchSettings
+        // useDispatch,
+        useFetchSettings,
+        useSettings: state.stateSettings,
+        // useIsPending: state.isPending,
+        // useCanSave: state.canSave,
     }
 
-
     return (
-        <SettingsContext.Provider
-            value={ContextValues}
-        >
+        <CrudContext.Provider value={ContextValues}>
             {props.children}
-        </SettingsContext.Provider>
+        </CrudContext.Provider>
     );
 }
 

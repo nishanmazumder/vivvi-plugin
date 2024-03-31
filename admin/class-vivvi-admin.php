@@ -141,7 +141,7 @@ class ViVVi_Admin {
 		);
 		wp_set_script_translations( $this->plugin_name, $this->plugin_name );
 
-        wp_localize_script( $this->plugin_name, 'vivviBuild', $localize );
+		wp_localize_script( $this->plugin_name, 'vivviBuild', $localize );
 
 		wp_localize_script( $this->plugin_name, 'vivviSettings', $this->get_localize_vars( true ) );
 	}
@@ -169,12 +169,7 @@ class ViVVi_Admin {
 	}
 
 	public static function get_setting_keys() {
-		return apply_filters(
-			'vivvi_setting_keys',
-			array(
-				'vivvi_brand_data',
-			)
-		);
+		return apply_filters( 'vivvi_setting_keys', array( 'vivvi_brand_data' ) );
 	}
 
 	protected static function get_settings() {
@@ -209,7 +204,6 @@ class ViVVi_Admin {
 		// update_option( $keys[0], $post_data );
 		// $this->response['message'] = json_encode($keys);
 		// $this->response['message'] = $post_data;
-
 
 		$this->send_ajax_response();
 	}

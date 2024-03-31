@@ -17,6 +17,7 @@ export const fetchSettings = async () => {
             vivvi_options_fetch_settings_errors: true
         }
     }
+
     if (options.vivvi_options) {
         return options.vivvi_options;
     }

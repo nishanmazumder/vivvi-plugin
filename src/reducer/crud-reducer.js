@@ -37,6 +37,8 @@ const CrudReducer = (state, action) => {
         default:
             return state;
     }
+
+    return newState;
 };
 
 export default CrudReducer;

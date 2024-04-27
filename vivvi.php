@@ -3,17 +3,17 @@
 /**
  * The ViVVi plugin init
  *
- * @link              https://www.bdsoftcr.com/
+ * @link              https://www.nishanmazumder.com/
  * @since             1.0.0
  * @package           ViVVi
  *
  * @wordpress-plugin
  * Plugin Name:       ViVVi
- * Plugin URI:        https://www.bdsoftcr.com/
+ * Plugin URI:        https://www.nishanmazumder.com/
  * Description:       ViVVi Management.
  * Version:           1.0.0
  * Author:            nishanmazumder
- * Author URI:         https://www.bdsoftcr.com/
+ * Author URI:         https://www.nishanmazumder.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       vivvi_text_domain
